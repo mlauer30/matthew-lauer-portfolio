@@ -23,8 +23,9 @@ function App() {
 					<ScrollToTop />
 					<AppHeader />					
 					<Suspense fallback={""}>
-						<Routes>
+						<Routes>                  
 							<Route path="/" element={<Home />} />
+              <Route path="/matthew-lauer-portfolio" element={<Home />} />
 							{/* <Route path="projects" element={<Projects />} />
 							<Route
 								path="projects/single-project"
