@@ -1,14 +1,36 @@
+import React, {useRef} from 'react';
+import emailjs from '@emailjs/browser';
 import Button from '../reusable/Button';
 import FormInput from '../reusable/FormInput';
 
 const ContactForm = () => {
+	const form = useRef();
+
+	const sendEmail = (e) => {
+	  e.preventDefault();
+	  emailjs
+		.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, form.current, {
+		  publicKey: process.env.REACT_APP_PUBLIC_KEY,
+		})
+		.then(
+		  () => {
+			console.log('SUCCESS!');
+		  },
+		  (error) => {
+			console.log('FAILED...', error.text);
+		  },
+		);
+	};
+
 	return (
 		<div className="w-full lg:w-1/2">
 			<div className="leading-loose">
 				<form
-					onSubmit={(e) => {
-						e.preventDefault();
-					}}
+					// onSubmit={(e) => {
+					// 	e.preventDefault();
+					// }}
+					ref={form}
+					onSubmit={sendEmail}
 					className="max-w-xl m-4 p-6 sm:p-10 bg-secondary-light dark:bg-secondary-dark rounded-xl shadow-xl text-left"
 				>
 					<p className="font-general-medium text-primary-dark dark:text-primary-light text-2xl mb-8">
@@ -16,19 +38,19 @@ const ContactForm = () => {
 					</p>
 					<FormInput
 						inputLabel="Full Name"
-						labelFor="name"
+						labelFor="from_name"
 						inputType="text"
-						inputId="name"
-						inputName="name"
+						inputId="from_name"
+						inputName="from_name"
 						placeholderText="Your Name"
 						ariaLabelName="Name"
 					/>
 					<FormInput
 						inputLabel="Email"
-						labelFor="email"
-						inputType="email"
-						inputId="email"
-						inputName="email"
+						labelFor="from_email"
+						inputType="from_email"
+						inputId="from_email"
+						inputName="from_email"
 						placeholderText="Your email"
 						ariaLabelName="Email"
 					/>
